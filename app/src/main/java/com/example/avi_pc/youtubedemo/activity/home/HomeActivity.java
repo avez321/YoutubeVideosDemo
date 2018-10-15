@@ -24,6 +24,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         activityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         getActivityComponent().inject(this);
         homePresenter.attachView(this);
+        homePresenter.getComedyVideosByRelevance();
     }
 
 }

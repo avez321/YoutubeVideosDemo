@@ -7,7 +7,13 @@ import com.example.avi_pc.youtubedemo.BuildConfig;
 import com.example.avi_pc.youtubedemo.Constants;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -36,6 +42,13 @@ public class RetrofitFactory {
         logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+       /* builder.addInterceptor(new Interceptor() {
+            @Override public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request().newBuilder().addHeader("key", "AIzaSyCy_c5T8gSUM9j8_s4KtHwXoglwWIi4opw") .build();
+                return chain.proceed(request);
+            }
+        });*/
+
         builder.addInterceptor(logging);
         return builder.build();
     }
