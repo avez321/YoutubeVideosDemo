@@ -4,16 +4,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Thumbnails {
 
-    @JsonProperty("default")
-    private Default _default;
+    public Thumbnails(){}
 
-    @JsonProperty("default")
-    public Default getDefault() {
-        return _default;
+    @JsonProperty("medium")
+    private Default medium;
+
+    @JsonProperty("medium")
+    public Default getMeduim() {
+        return medium;
     }
 
-    @JsonProperty("default")
+    @JsonProperty("medium")
     public void setDefault(Default _default) {
-        this._default = _default;
+        this.medium = _default;
     }
 }

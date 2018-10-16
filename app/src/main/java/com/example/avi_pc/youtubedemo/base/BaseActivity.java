@@ -10,8 +10,9 @@ import com.example.avi_pc.youtubedemo.injection.component.ActivityComponent;
 import com.example.avi_pc.youtubedemo.injection.component.DaggerActivityComponent;
 import com.example.avi_pc.youtubedemo.injection.module.ActivityModule;
 import com.example.avi_pc.youtubedemo.util.DialogUtil;
+import com.google.android.youtube.player.YouTubeBaseActivity;
 
-public class BaseActivity extends AppCompatActivity implements MvpView {
+public class BaseActivity extends YouTubeBaseActivity implements MvpView {
     private ActivityComponent mActivityComponent;
     protected Dialog dialog;
 

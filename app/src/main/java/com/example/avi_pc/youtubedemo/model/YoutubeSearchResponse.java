@@ -10,6 +10,8 @@ import java.util.List;
 
 public class YoutubeSearchResponse {
 
+    YoutubeSearchResponse(){}
+
     @JsonProperty("nextPageToken")
     private String nextPageToken;
     @JsonProperty("items")

@@ -3,11 +3,15 @@ package com.example.avi_pc.youtubedemo.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Item {
+    public Item(){}
 
     @JsonProperty("id")
     private Id id;
     @JsonProperty("snippet")
     private Snippet snippet;
+
+    @JsonProperty("statistics")
+    private Statistics statistics;
 
     @JsonProperty("id")
     public Id getId() {
@@ -29,4 +33,11 @@ public class Item {
         this.snippet = snippet;
     }
 
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
+    }
 }

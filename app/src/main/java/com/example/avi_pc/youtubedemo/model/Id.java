@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Id {
 
+    public  Id(){}
+
     @JsonProperty("videoId")
     private String videoId;
 

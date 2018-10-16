@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Snippet {
 
+    public Snippet(){}
     @JsonProperty("title")
     private String title;
     @JsonProperty("thumbnails")
