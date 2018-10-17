@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:name=".YoutubeDemoApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.home.HomeActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.home.HomeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

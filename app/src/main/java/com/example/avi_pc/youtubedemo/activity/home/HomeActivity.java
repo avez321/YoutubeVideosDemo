@@ -8,10 +8,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.avi_pc.youtubedemo.Constants;
 import com.example.avi_pc.youtubedemo.R;
 import com.example.avi_pc.youtubedemo.base.BaseActivity;
 import com.example.avi_pc.youtubedemo.databinding.ActivityHomeBinding;
 import com.example.avi_pc.youtubedemo.model.Item;
+import com.example.avi_pc.youtubedemo.model.User;
+import com.example.avi_pc.youtubedemo.util.GlideUtil;
 
 import java.util.List;
 
@@ -33,6 +36,14 @@ public class HomeActivity extends BaseActivity implements HomeView {
         activityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         getActivityComponent().inject(this);
         homePresenter.attachView(this);
+
+        User user = getIntent().getParcelableExtra(Constants.USER);
+
+        GlideUtil.showImage(activityHomeBinding.imgProfile,user.getImageUrl(),0);
+        activityHomeBinding.txtUsername.setText(user.getUsername());
+        activityHomeBinding.txtEmail.setText(user.getEmail());
+
+
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         activityHomeBinding.rvYoutubeList.setLayoutManager(linearLayoutManager);
