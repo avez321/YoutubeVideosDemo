@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 android {
 
@@ -33,9 +48,10 @@ dependencies {
     final OKHTTP_VERSION = '3.10.0'
     final JACKSON_VERSION = '2.9.4'
     final GLIDE_VERSION = '4.8.0'
+    final ORMLITE_VERSION ='4.48'
     final CIRCULAR_IMAGE_VIEW_VERSION = '2.1.0'
-
-    final PLAY_SERVICES_VERSION="15.0.1"
+    final PLAY_SERVICES_VERSION="16.0.1"
+    final CRASHLATICS_VERSION ="2.9.5@aar"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     implementation "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_VERSION"
@@ -57,7 +73,10 @@ dependencies {
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation "com.google.android.gms:play-services-auth:$PLAY_SERVICES_VERSION"
     implementation "de.hdodenhof:circleimageview:$CIRCULAR_IMAGE_VIEW_VERSION"
-    implementation "com.j256.ormlite:ormlite-android:4.45"
+    implementation "com.j256.ormlite:ormlite-android:$ORMLITE_VERSION"
+    implementation("com.crashlytics.sdk.android:crashlytics:$CRASHLATICS_VERSION") {
+        transitive = true;
+    }
 
 
 }

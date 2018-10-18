@@ -70,7 +70,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     private void loginToApp(GoogleSignInAccount account) {
-        User user = new User(account.getDisplayName(), account.getPhotoUrl().toString(), account.getEmail());
+        User user = new User(account.getDisplayName(), account.getPhotoUrl()!=null?account.getPhotoUrl().toString():"", account.getEmail());
         loginPresenter.saveUser(user);
         loginUsingUser(user);
     }
@@ -79,6 +79,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void loginUsingUser(User user){
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(Constants.USER, user);
+        finish();
         startActivity(intent);
     }
 

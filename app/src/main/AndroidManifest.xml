@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a10d70cafd3beab17f0ce99f12936d13e7a5d4b9" />
     </application>
 
 </manifest>

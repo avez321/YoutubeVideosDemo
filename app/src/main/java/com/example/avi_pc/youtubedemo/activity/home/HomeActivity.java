@@ -1,7 +1,5 @@
 package com.example.avi_pc.youtubedemo.activity.home;
 
-
-
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,7 +20,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-
 public class HomeActivity extends BaseActivity implements HomeView {
     private ActivityHomeBinding activityHomeBinding;
 
@@ -39,28 +36,30 @@ public class HomeActivity extends BaseActivity implements HomeView {
         getActivityComponent().inject(this);
         homePresenter.attachView(this);
 
-        User user = getIntent().getParcelableExtra(Constants.USER);
+        initUserData();
+        initRecycleView();
 
-        GlideUtil.showImage(activityHomeBinding.imgProfile,user.getImageUrl(),0);
-        activityHomeBinding.txtUsername.setText(user.getUsername());
-        activityHomeBinding.txtEmail.setText(user.getEmail());
-
-
-
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        activityHomeBinding.rvYoutubeList.setLayoutManager(linearLayoutManager);
-        activityHomeBinding.rvYoutubeList.setAdapter(youtubeVideoAdapter);
-
-
-        homePresenter.getComedyVideosByRelevance(true,false);
+        homePresenter.getComedyVideosByRelevance(true, false);
 
         activityHomeBinding.swipeToRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                homePresenter.getComedyVideosByRelevance(true,true);
+                homePresenter.getComedyVideosByRelevance(true, true);
             }
         });
+    }
 
+    private void initUserData() {
+        User user = getIntent().getParcelableExtra(Constants.USER);
+        GlideUtil.showImage(activityHomeBinding.imgProfile, user.getImageUrl(), R.drawable.img_default_profile);
+        activityHomeBinding.txtUsername.setText(user.getUsername());
+        activityHomeBinding.txtEmail.setText(user.getEmail());
+    }
+
+    private void initRecycleView() {
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        activityHomeBinding.rvYoutubeList.setLayoutManager(linearLayoutManager);
+        activityHomeBinding.rvYoutubeList.setAdapter(youtubeVideoAdapter);
 
         activityHomeBinding.rvYoutubeList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -97,6 +96,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void showErrorMsg(String msg) {
-        DialogUtil.showToast(msg, Toast.LENGTH_SHORT,this);
+        DialogUtil.showToast(msg, Toast.LENGTH_SHORT, this);
     }
 }
