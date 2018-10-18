@@ -5,7 +5,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_bottom_16dp">
 
         <com.google.android.youtube.player.YouTubePlayerView
             android:id="@+id/youTubePlayerView"

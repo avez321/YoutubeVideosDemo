@@ -13,4 +13,5 @@
     <dimen name="progress_width">25dp</dimen>
     <dimen name="margin_right_5dp">5dp</dimen>
     <dimen name="margin_start_8dp">8dp</dimen>
+    <dimen name="padding_bottom_16dp">16dp</dimen>
 </resources>
