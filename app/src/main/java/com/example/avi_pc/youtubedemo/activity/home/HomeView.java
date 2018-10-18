@@ -12,4 +12,8 @@ public interface HomeView extends MvpView {
     void addVideoData(List<Item> items);
 
     void setLayoutMoreVisibility(int visibility);
+
+    void hideSwipeLoader();
+
+    void showErrorMsg(String msg);
 }

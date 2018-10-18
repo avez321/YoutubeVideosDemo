@@ -3,10 +3,19 @@ package com.example.avi_pc.youtubedemo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.j256.ormlite.field.DatabaseField;
+
 public class User implements Parcelable {
+    @DatabaseField(generatedId=true)
+    private int id;
+    @DatabaseField
     private String username;
+    @DatabaseField
     private String imageUrl;
+    @DatabaseField
     private String email;
+
+    public User(){ }
 
     public User(String username, String imageUrl, String email) {
         this.username = username;

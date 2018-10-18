@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.example.avi_pc.youtubedemo.Constants;
 import com.example.avi_pc.youtubedemo.R;
@@ -14,6 +15,7 @@ import com.example.avi_pc.youtubedemo.base.BaseActivity;
 import com.example.avi_pc.youtubedemo.databinding.ActivityHomeBinding;
 import com.example.avi_pc.youtubedemo.model.Item;
 import com.example.avi_pc.youtubedemo.model.User;
+import com.example.avi_pc.youtubedemo.util.DialogUtil;
 import com.example.avi_pc.youtubedemo.util.GlideUtil;
 
 import java.util.List;
@@ -50,13 +52,12 @@ public class HomeActivity extends BaseActivity implements HomeView {
         activityHomeBinding.rvYoutubeList.setAdapter(youtubeVideoAdapter);
 
 
-        homePresenter.getComedyVideosByRelevance(true);
+        homePresenter.getComedyVideosByRelevance(true,false);
 
         activityHomeBinding.swipeToRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                homePresenter.getComedyVideosByRelevance(true);
-                activityHomeBinding.swipeToRefreshLayout.setRefreshing(false);
+                homePresenter.getComedyVideosByRelevance(true,true);
             }
         });
 
@@ -87,5 +88,15 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void setLayoutMoreVisibility(int visibility) {
         activityHomeBinding.loadingMoreLayout.setVisibility(visibility);
+    }
+
+    @Override
+    public void hideSwipeLoader() {
+        activityHomeBinding.swipeToRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showErrorMsg(String msg) {
+        DialogUtil.showToast(msg, Toast.LENGTH_SHORT,this);
     }
 }

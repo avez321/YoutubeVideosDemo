@@ -19,7 +19,7 @@ public class DialogUtil {
         if (dialog != null && dialog.isShowing()) dialog.dismiss();
     }
 
-    public void showToast(String message, int duration, Context context) {
+    public static void showToast(String message, int duration, Context context) {
         Toast.makeText(context, message, duration).show();
     }
 }

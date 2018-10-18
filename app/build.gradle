@@ -57,6 +57,7 @@ dependencies {
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation "com.google.android.gms:play-services-auth:$PLAY_SERVICES_VERSION"
     implementation "de.hdodenhof:circleimageview:$CIRCULAR_IMAGE_VIEW_VERSION"
+    implementation "com.j256.ormlite:ormlite-android:4.45"
 
 
 }

@@ -1,12 +1,16 @@
-package com.example.avi_pc.youtubedemo;
+package com.example.avi_pc.youtubedemo.activity.login;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
+import com.example.avi_pc.youtubedemo.Constants;
+import com.example.avi_pc.youtubedemo.R;
 import com.example.avi_pc.youtubedemo.activity.home.HomeActivity;
+import com.example.avi_pc.youtubedemo.base.BaseActivity;
+import com.example.avi_pc.youtubedemo.database.UserTable;
+import com.example.avi_pc.youtubedemo.databinding.ActivityLoginBinding;
 import com.example.avi_pc.youtubedemo.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -15,33 +19,34 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class MainActivity extends AppCompatActivity {
+import javax.inject.Inject;
 
-    private GoogleSignInClient mGoogleSignInClient;
+public class LoginActivity extends BaseActivity implements LoginView {
+    private ActivityLoginBinding activityLoginBinding;
+
+    @Inject
+    LoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        getActivityComponent().inject(this);
+        loginPresenter.attachView(this);
 
+        loginPresenter.checkUserAndsignIn();
 
-        findViewById(R.id.google_sign_in_button).setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn();
+                loginPresenter.signIn();
             }
         });
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestProfile()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+    @Override
+    public void signIn(GoogleSignInClient googleSignInClient) {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, Constants.RC_SIGN_IN);
     }
 
@@ -55,11 +60,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
             loginToApp(account);
         } catch (ApiException e) {
             e.toString();
@@ -68,9 +71,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void loginToApp(GoogleSignInAccount account) {
         User user = new User(account.getDisplayName(), account.getPhotoUrl().toString(), account.getEmail());
+        loginPresenter.saveUser(user);
+        loginUsingUser(user);
+    }
+
+    @Override
+    public void loginUsingUser(User user){
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(Constants.USER, user);
         startActivity(intent);
-
     }
+
+    @Override
+    public GoogleSignInClient getGoogleSignInClient(GoogleSignInOptions gso){
+        return GoogleSignIn.getClient(this, gso);
+    }
+
 }

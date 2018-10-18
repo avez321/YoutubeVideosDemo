@@ -37,14 +37,16 @@ public class HomePresenter extends BasePresenter<HomeView> {
         this.youtubeDemoAppApi = youtubeDemoAppApi;
     }
 
-    void getComedyVideosByRelevance(final Boolean isFirstApiCall) {
-        if(isFirstApiCall) {
-            getMvpView().showProgressDialog();
-        } else {
-            getMvpView().setLayoutMoreVisibility(View.VISIBLE);
+    void getComedyVideosByRelevance(final boolean isFirstApiCall, final boolean isSwipeToRefresh) {
+        if (!isSwipeToRefresh) {
+            if (isFirstApiCall) {
+                getMvpView().showProgressDialog();
+            } else {
+                getMvpView().setLayoutMoreVisibility(View.VISIBLE);
+            }
         }
 
-        youtubeDemoAppApi.searchVideos(Constants.API_KEY, "snippet", 10, "relevance", "items(snippet/thumbnails/medium,id/videoId,snippet(channelId,channelTitle,title)),nextPageToken",nextPageToken).flatMapIterable(new Function<YoutubeSearchResponse, Iterable<Item>>() {
+        youtubeDemoAppApi.searchVideos(Constants.API_KEY, Constants.COMEDY, Constants.SNIPPET, Constants.MAX_RESULT, Constants.RELEVENCE, Constants.QUERY_FIELDS, nextPageToken).flatMapIterable(new Function<YoutubeSearchResponse, Iterable<Item>>() {
             @Override
             public Iterable<Item> apply(YoutubeSearchResponse youtubeSearchResponse) throws Exception {
                 nextPageToken = youtubeSearchResponse.getNextPageToken();
@@ -54,7 +56,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
             @Override
             public ObservableSource<YoutubeSearchResponse> apply(Item item) throws Exception {
                 item1 = item;
-                return youtubeDemoAppApi.getVideoLikes(item.getId().getVideoId(), Constants.API_KEY, "statistics", "items/statistics/likeCount");
+                return youtubeDemoAppApi.getVideoLikes(item.getId().getVideoId(), Constants.API_KEY, Constants.STATISTICS, Constants.STATISTICS_FIELD);
             }
         }).flatMap(new Function<YoutubeSearchResponse, ObservableSource<Item>>() {
             @Override
@@ -77,12 +79,16 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     public void onSuccess(List<Item> items) {
 
-                        if(isFirstApiCall) {
-                            getMvpView().showVideoData(items);
-                            getMvpView().hideProgressDialog();
+                        if (!isSwipeToRefresh) {
+                            if (isFirstApiCall) {
+                                getMvpView().showVideoData(items);
+                                getMvpView().hideProgressDialog();
+                            } else {
+                                getMvpView().addVideoData(items);
+                                getMvpView().setLayoutMoreVisibility(View.GONE);
+                            }
                         } else {
-                            getMvpView().addVideoData(items);
-                            getMvpView().setLayoutMoreVisibility(View.GONE);
+                            getMvpView().hideSwipeLoader();
                         }
                     }
 
@@ -90,14 +96,16 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     public void onError(Throwable e) {
                         getMvpView().hideProgressDialog();
                         getMvpView().setLayoutMoreVisibility(View.GONE);
+                        getMvpView().hideSwipeLoader();
+                        getMvpView().showErrorMsg(e.toString());
                     }
                 });
     }
 
     public void onScrolled(int dy, boolean canScroll, boolean showVisibleItemPosition) {
-        if (dy != 0 && !canScroll ) {
+        if (dy != 0 && !canScroll) {
             if (showVisibleItemPosition) {
-                getComedyVideosByRelevance(false);
+                getComedyVideosByRelevance(false, false);
             }
         }
     }

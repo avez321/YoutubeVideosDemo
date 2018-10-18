@@ -12,17 +12,18 @@
         android:supportsRtl="true"
         android:name=".YoutubeDemoApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.home.HomeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <activity
+            android:name=".activity.login.LoginActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.home.HomeActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

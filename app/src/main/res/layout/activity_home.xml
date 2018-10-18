@@ -3,101 +3,92 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeToRefreshLayout"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile"
+                android:layout_width="@dimen/width_70dp"
+                android:layout_height="@dimen/height_70dp"
+                android:layout_marginTop="@dimen/margin_top_8dp"
+                android:orientation="vertical"
+                app:civ_border_color="@android:color/black"
+                app:civ_border_width="@dimen/border_width_1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.06"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:id="@+id/txt_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_start_8dp"
+                android:layout_marginLeft="@dimen/margin_start_8dp"
+                android:layout_marginTop="@dimen/margin_top_8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/img_profile"
+                app:layout_constraintTop_toTopOf="@+id/img_profile" />
+
+            <TextView
+                android:id="@+id/txt_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_start_8dp"
+                android:layout_marginLeft="@dimen/margin_start_8dp"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+                app:layout_constraintEnd_toEndOf="@+id/txt_username"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/img_profile"
+                app:layout_constraintTop_toBottomOf="@+id/txt_username"
+                app:layout_constraintVertical_bias="0.593" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_youtube_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="@dimen/height_0dp"
+                android:layout_marginTop="@dimen/margin_top_8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_profile">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_profile"
-                    android:layout_width="@dimen/width_70dp"
-                    android:layout_height="@dimen/height_70dp"
-                    android:layout_marginTop="8dp"
-                    app:civ_border_color="@android:color/black"
-                    app:civ_border_width="@dimen/border_width_1dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.06"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </de.hdodenhof.circleimageview.CircleImageView>
+            </android.support.v7.widget.RecyclerView>
 
-                <TextView
-                    android:id="@+id/txt_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="email"
-                    android:textSize="@dimen/text_size_16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/img_profile"
-                    app:layout_constraintTop_toTopOf="@+id/img_profile" />
+            <LinearLayout
+                android:id="@+id/loading_more_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_50dp"
+                android:alpha="0.5"
+                android:background="@android:color/background_dark"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_10dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_youtube_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ProgressBar
+                    android:layout_width="@dimen/progress_width"
+                    android:layout_height="@dimen/progress_height"
+                    android:layout_marginRight="@dimen/margin_right_5dp" />
 
                 <TextView
-                    android:id="@+id/txt_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="avez"
-                    android:textSize="@dimen/text_size_16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/img_profile"
-                    app:layout_constraintEnd_toEndOf="@+id/txt_username"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/img_profile"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_username"
-                    app:layout_constraintVertical_bias="0.593" />
+                    android:text="@string/loading_more_videos"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_youtube_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_profile">
-
-                </android.support.v7.widget.RecyclerView>
-
-                <LinearLayout
-                    android:id="@+id/loading_more_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:alpha="0.5"
-                    android:background="@android:color/background_dark"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/padding_10dp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/rv_youtube_list"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <ProgressBar
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginRight="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/loading_more_videos"
-                        android:textColor="@android:color/white" />
-                </LinearLayout>
-
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>
