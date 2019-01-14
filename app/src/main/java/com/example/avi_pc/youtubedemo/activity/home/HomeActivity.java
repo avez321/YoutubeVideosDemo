@@ -26,6 +26,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Inject
     HomePresenter homePresenter;
 
+    String ssas;
+
     @Inject
     YoutubeVideoAdapter youtubeVideoAdapter;
 
